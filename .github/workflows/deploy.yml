@@ -30,3 +30,11 @@ jobs:
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
           docker push $REGISTRY/$REPOSITORY:latest
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+
+      - name: Update Lambda function
+        env:
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          REPOSITORY: bayerhackathon
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          aws lambda update-function-code --function-name bayerhackathon --image-uri $REGISTRY/$REPOSITORY:$IMAGE_TAG
