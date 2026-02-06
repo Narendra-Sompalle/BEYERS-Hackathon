@@ -1,0 +1,104 @@
+[
+  {
+    "timestamp": "2026-02-06T14:15:02.100Z",
+    "level": "INFO",
+    "service": "checkout-service",
+    "instance_id": "i-0abc123def456",
+    "trace_id": "1-67a4c200-bbb000000001",
+    "message": "Configuration reload triggered by deployment deploy-20260206-1400",
+    "request_id": "sys-config-reload",
+    "metadata": {
+      "deploy_id": "deploy-20260206-1400",
+      "config_changes": {
+        "db.pool.max_connections": { "old": 100, "new": 50 },
+        "db.pool.timeout_seconds": { "old": 60, "new": 30 }
+      },
+      "pool_active": 28,
+      "pool_max": 50
+    }
+  },
+  {
+    "timestamp": "2026-02-06T14:15:02.105Z",
+    "level": "WARN",
+    "service": "checkout-service",
+    "instance_id": "i-0abc123def456",
+    "trace_id": "1-67a4c200-bbb000000001",
+    "message": "Connection pool shrunk: 22 connections released to meet new max_connections=50",
+    "request_id": "sys-config-reload",
+    "metadata": {
+      "pool_active": 28,
+      "pool_max": 50,
+      "connections_released": 22
+    }
+  },
+  {
+    "timestamp": "2026-02-06T14:15:44.330Z",
+    "level": "INFO",
+    "service": "checkout-service",
+    "instance_id": "i-0abc123def789",
+    "trace_id": "1-67a4c200-bbb000000002",
+    "message": "Order processed successfully",
+    "request_id": "req-10101",
+    "metadata": {
+      "order_id": "ORD-88501",
+      "customer_id": "CUST-6678",
+      "response_time_ms": 220,
+      "db_query_time_ms": 55,
+      "pool_active": 35,
+      "pool_max": 50
+    }
+  },
+  {
+    "timestamp": "2026-02-06T14:16:22.710Z",
+    "level": "WARN",
+    "service": "checkout-service",
+    "instance_id": "i-0abc123def456",
+    "trace_id": "1-67a4c200-bbb000000003",
+    "message": "Connection pool nearing capacity",
+    "request_id": "req-10102",
+    "metadata": {
+      "order_id": "ORD-88502",
+      "customer_id": "CUST-8891",
+      "response_time_ms": 390,
+      "db_query_time_ms": 180,
+      "pool_active": 44,
+      "pool_max": 50
+    }
+  },
+  {
+    "timestamp": "2026-02-06T14:17:05.880Z",
+    "level": "WARN",
+    "service": "checkout-service",
+    "instance_id": "i-0abc123def789",
+    "trace_id": "1-67a4c200-bbb000000004",
+    "message": "Connection pool nearing capacity",
+    "request_id": "req-10103",
+    "metadata": {
+      "order_id": "ORD-88503",
+      "customer_id": "CUST-1134",
+      "response_time_ms": 520,
+      "db_query_time_ms": 310,
+      "pool_active": 47,
+      "pool_max": 50
+    }
+  },
+  {
+    "timestamp": "2026-02-06T14:18:33.440Z",
+    "level": "ERROR",
+    "service": "checkout-service",
+    "instance_id": "i-0abc123def456",
+    "trace_id": "1-67a4c200-bbb000000005",
+    "message": "DB connection pool exhausted — waiting for available connection",
+    "error_code": "DB_POOL_EXHAUSTED",
+    "request_id": "req-10104",
+    "metadata": {
+      "order_id": "ORD-88504",
+      "customer_id": "CUST-2290",
+      "response_time_ms": 890,
+      "db_query_time_ms": null,
+      "pool_active": 50,
+      "pool_max": 50,
+      "wait_queue_depth": 3
+    }
+  }
+]

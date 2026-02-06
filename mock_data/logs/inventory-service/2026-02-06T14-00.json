@@ -1,0 +1,42 @@
+[
+  {
+    "timestamp": "2026-02-06T14:00:55.110Z",
+    "level": "INFO",
+    "service": "inventory-service",
+    "instance_id": "i-0inv123def456",
+    "trace_id": "1-67a4c000-iii000000001",
+    "message": "Stock reservation confirmed",
+    "request_id": "inv-30001",
+    "metadata": { "sku": "SKU-10044", "quantity": 2, "warehouse": "EU-WEST-1", "response_time_ms": 45 }
+  },
+  {
+    "timestamp": "2026-02-06T14:10:22.330Z",
+    "level": "INFO",
+    "service": "inventory-service",
+    "instance_id": "i-0inv123def456",
+    "trace_id": "1-67a4c000-iii000000002",
+    "message": "Stock reservation confirmed",
+    "request_id": "inv-30002",
+    "metadata": { "sku": "SKU-20081", "quantity": 1, "warehouse": "EU-WEST-1", "response_time_ms": 38 }
+  },
+  {
+    "timestamp": "2026-02-06T14:20:10.550Z",
+    "level": "INFO",
+    "service": "inventory-service",
+    "instance_id": "i-0inv123def456",
+    "trace_id": "1-67a4c400-iii000000003",
+    "message": "Stock reservation confirmed",
+    "request_id": "inv-30003",
+    "metadata": { "sku": "SKU-10044", "quantity": 3, "warehouse": "EU-WEST-1", "response_time_ms": 41 }
+  },
+  {
+    "timestamp": "2026-02-06T14:30:05.880Z",
+    "level": "INFO",
+    "service": "inventory-service",
+    "instance_id": "i-0inv123def456",
+    "trace_id": "1-67a4c600-iii000000004",
+    "message": "Stock reservation confirmed",
+    "request_id": "inv-30004",
+    "metadata": { "sku": "SKU-30012", "quantity": 1, "warehouse": "EU-WEST-1", "response_time_ms": 44 }
+  }
+]

@@ -1,0 +1,104 @@
+[
+  {
+    "timestamp": "2026-02-06T14:00:12.110Z",
+    "level": "INFO",
+    "service": "checkout-service",
+    "instance_id": "i-0abc123def456",
+    "trace_id": "1-67a4c000-aaa000000001",
+    "message": "Order processed successfully",
+    "request_id": "req-10001",
+    "metadata": {
+      "order_id": "ORD-88401",
+      "customer_id": "CUST-2041",
+      "response_time_ms": 172,
+      "db_query_time_ms": 34,
+      "pool_active": 22,
+      "pool_max": 100
+    }
+  },
+  {
+    "timestamp": "2026-02-06T14:01:05.330Z",
+    "level": "INFO",
+    "service": "checkout-service",
+    "instance_id": "i-0abc123def456",
+    "trace_id": "1-67a4c000-aaa000000002",
+    "message": "Order processed successfully",
+    "request_id": "req-10002",
+    "metadata": {
+      "order_id": "ORD-88402",
+      "customer_id": "CUST-5512",
+      "response_time_ms": 165,
+      "db_query_time_ms": 29,
+      "pool_active": 24,
+      "pool_max": 100
+    }
+  },
+  {
+    "timestamp": "2026-02-06T14:02:44.880Z",
+    "level": "INFO",
+    "service": "checkout-service",
+    "instance_id": "i-0abc123def789",
+    "trace_id": "1-67a4c000-aaa000000003",
+    "message": "Inventory reservation confirmed",
+    "request_id": "req-10003",
+    "metadata": {
+      "order_id": "ORD-88403",
+      "customer_id": "CUST-7890",
+      "response_time_ms": 188,
+      "db_query_time_ms": 41,
+      "pool_active": 19,
+      "pool_max": 100
+    }
+  },
+  {
+    "timestamp": "2026-02-06T14:04:11.220Z",
+    "level": "INFO",
+    "service": "checkout-service",
+    "instance_id": "i-0abc123def456",
+    "trace_id": "1-67a4c000-aaa000000004",
+    "message": "Payment authorization completed",
+    "request_id": "req-10004",
+    "metadata": {
+      "order_id": "ORD-88404",
+      "customer_id": "CUST-3321",
+      "response_time_ms": 201,
+      "db_query_time_ms": 38,
+      "pool_active": 25,
+      "pool_max": 100
+    }
+  },
+  {
+    "timestamp": "2026-02-06T14:06:33.550Z",
+    "level": "WARN",
+    "service": "checkout-service",
+    "instance_id": "i-0abc123def789",
+    "trace_id": "1-67a4c000-aaa000000005",
+    "message": "Slow query detected on orders table",
+    "request_id": "req-10005",
+    "metadata": {
+      "order_id": "ORD-88405",
+      "customer_id": "CUST-1102",
+      "response_time_ms": 310,
+      "db_query_time_ms": 190,
+      "pool_active": 27,
+      "pool_max": 100
+    }
+  },
+  {
+    "timestamp": "2026-02-06T14:09:01.740Z",
+    "level": "INFO",
+    "service": "checkout-service",
+    "instance_id": "i-0abc123def456",
+    "trace_id": "1-67a4c000-aaa000000006",
+    "message": "Order processed successfully",
+    "request_id": "req-10006",
+    "metadata": {
+      "order_id": "ORD-88406",
+      "customer_id": "CUST-4455",
+      "response_time_ms": 178,
+      "db_query_time_ms": 35,
+      "pool_active": 23,
+      "pool_max": 100
+    }
+  }
+]

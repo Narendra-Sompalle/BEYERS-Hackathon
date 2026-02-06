@@ -1,0 +1,80 @@
+{
+  "deployments": [
+    {
+      "deploy_id": "deploy-20260206-0830",
+      "timestamp": "2026-02-06T08:30:00Z",
+      "service": "payment-service",
+      "version_from": "1.12.0",
+      "version_to": "1.12.1",
+      "deployer": "ci-pipeline",
+      "pipeline": "arn:aws:codepipeline:us-east-1:123456789012:payment-svc-pipeline",
+      "change_summary": "Patch: updated Stripe SDK to v14.2.1 for PCI compliance",
+      "commit_sha": "a1b2c3d4e5f6",
+      "status": "success",
+      "rollback_target": "1.12.0",
+      "config_diff": {}
+    },
+    {
+      "deploy_id": "deploy-20260206-1105",
+      "timestamp": "2026-02-06T11:05:00Z",
+      "service": "inventory-service",
+      "version_from": "2.4.1",
+      "version_to": "2.4.2",
+      "deployer": "ci-pipeline",
+      "pipeline": "arn:aws:codepipeline:us-east-1:123456789012:inventory-svc-pipeline",
+      "change_summary": "Patch: updated log4j library to 2.24.3",
+      "commit_sha": "f6e5d4c3b2a1",
+      "status": "success",
+      "rollback_target": "2.4.1",
+      "config_diff": {}
+    },
+    {
+      "deploy_id": "deploy-20260206-1400",
+      "timestamp": "2026-02-06T14:00:00Z",
+      "service": "checkout-service",
+      "version_from": "3.8.0",
+      "version_to": "3.8.1",
+      "deployer": "ci-pipeline",
+      "pipeline": "arn:aws:codepipeline:us-east-1:123456789012:checkout-svc-pipeline",
+      "change_summary": "Config change: tuned db-connection-pool settings to reduce idle resource usage (max_connections: 100→50, timeout: 60s→30s)",
+      "commit_sha": "d4e5f6a1b2c3",
+      "jira_ticket": "OPS-4421",
+      "approved_by": "platform-team",
+      "status": "success",
+      "rollback_target": "3.8.0",
+      "config_diff": {
+        "db.pool.max_connections": { "old": 100, "new": 50 },
+        "db.pool.timeout_seconds": { "old": 60, "new": 30 },
+        "db.pool.idle_timeout_seconds": { "old": 300, "new": 120 }
+      },
+      "environment_variables_changed": [
+        "CHECKOUT_DB_POOL_MAX",
+        "CHECKOUT_DB_POOL_TIMEOUT",
+        "CHECKOUT_DB_POOL_IDLE_TIMEOUT"
+      ]
+    },
+    {
+      "deploy_id": "deploy-20260206-1410",
+      "timestamp": "2026-02-06T14:10:00Z",
+      "service": "checkout-service",
+      "version_from": "3.8.1",
+      "version_to": "3.8.1",
+      "deployer": "ci-pipeline",
+      "pipeline": "arn:aws:codepipeline:us-east-1:123456789012:checkout-svc-pipeline",
+      "change_summary": "Config-only deploy: enabled request rate limiting (1000 req/s per instance)",
+      "commit_sha": "d4e5f6a1b2c3",
+      "jira_ticket": "OPS-4422",
+      "approved_by": "platform-team",
+      "status": "success",
+      "rollback_target": "3.8.0",
+      "config_diff": {
+        "rate_limiter.enabled": { "old": false, "new": true },
+        "rate_limiter.max_rps": { "old": null, "new": 1000 }
+      },
+      "environment_variables_changed": [
+        "CHECKOUT_RATE_LIMIT_ENABLED",
+        "CHECKOUT_RATE_LIMIT_MAX_RPS"
+      ]
+    }
+  ]
+}

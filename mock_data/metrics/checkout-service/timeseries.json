@@ -1,0 +1,127 @@
+{
+  "service": "checkout-service",
+  "region": "us-east-1",
+  "collection_period_seconds": 60,
+  "metrics": [
+    {
+      "metric_name": "p99_latency_ms",
+      "namespace": "Bayer/CheckoutService",
+      "unit": "Milliseconds",
+      "statistic": "p99",
+      "description": "99th percentile response latency",
+      "datapoints": [
+        { "timestamp": "2026-02-06T13:45:00Z", "value": 170, "anomaly": false },
+        { "timestamp": "2026-02-06T13:50:00Z", "value": 175, "anomaly": false },
+        { "timestamp": "2026-02-06T13:55:00Z", "value": 168, "anomaly": false },
+        { "timestamp": "2026-02-06T14:00:00Z", "value": 180, "anomaly": false },
+        { "timestamp": "2026-02-06T14:05:00Z", "value": 195, "anomaly": false },
+        { "timestamp": "2026-02-06T14:10:00Z", "value": 210, "anomaly": false },
+        { "timestamp": "2026-02-06T14:15:00Z", "value": 450, "anomaly": true  },
+        { "timestamp": "2026-02-06T14:20:00Z", "value": 1200, "anomaly": true },
+        { "timestamp": "2026-02-06T14:25:00Z", "value": 1850, "anomaly": true },
+        { "timestamp": "2026-02-06T14:30:00Z", "value": 2100, "anomaly": true },
+        { "timestamp": "2026-02-06T14:35:00Z", "value": 2300, "anomaly": true }
+      ]
+    },
+    {
+      "metric_name": "cpu_utilization_percent",
+      "namespace": "AWS/EC2",
+      "unit": "Percent",
+      "statistic": "Average",
+      "description": "Average CPU utilization across instances",
+      "datapoints": [
+        { "timestamp": "2026-02-06T13:45:00Z", "value": 32, "anomaly": false },
+        { "timestamp": "2026-02-06T13:50:00Z", "value": 34, "anomaly": false },
+        { "timestamp": "2026-02-06T13:55:00Z", "value": 31, "anomaly": false },
+        { "timestamp": "2026-02-06T14:00:00Z", "value": 35, "anomaly": false },
+        { "timestamp": "2026-02-06T14:05:00Z", "value": 38, "anomaly": false },
+        { "timestamp": "2026-02-06T14:10:00Z", "value": 40, "anomaly": false },
+        { "timestamp": "2026-02-06T14:15:00Z", "value": 55, "anomaly": false },
+        { "timestamp": "2026-02-06T14:20:00Z", "value": 72, "anomaly": true  },
+        { "timestamp": "2026-02-06T14:25:00Z", "value": 81, "anomaly": true  },
+        { "timestamp": "2026-02-06T14:30:00Z", "value": 88, "anomaly": true  },
+        { "timestamp": "2026-02-06T14:35:00Z", "value": 91, "anomaly": true  }
+      ]
+    },
+    {
+      "metric_name": "memory_utilization_percent",
+      "namespace": "CWAgent",
+      "unit": "Percent",
+      "statistic": "Average",
+      "description": "Average memory utilization across instances",
+      "datapoints": [
+        { "timestamp": "2026-02-06T13:45:00Z", "value": 58, "anomaly": false },
+        { "timestamp": "2026-02-06T13:50:00Z", "value": 59, "anomaly": false },
+        { "timestamp": "2026-02-06T13:55:00Z", "value": 58, "anomaly": false },
+        { "timestamp": "2026-02-06T14:00:00Z", "value": 60, "anomaly": false },
+        { "timestamp": "2026-02-06T14:05:00Z", "value": 61, "anomaly": false },
+        { "timestamp": "2026-02-06T14:10:00Z", "value": 62, "anomaly": false },
+        { "timestamp": "2026-02-06T14:15:00Z", "value": 66, "anomaly": false },
+        { "timestamp": "2026-02-06T14:20:00Z", "value": 73, "anomaly": true  },
+        { "timestamp": "2026-02-06T14:25:00Z", "value": 78, "anomaly": true  },
+        { "timestamp": "2026-02-06T14:30:00Z", "value": 82, "anomaly": true  },
+        { "timestamp": "2026-02-06T14:35:00Z", "value": 84, "anomaly": true  }
+      ]
+    },
+    {
+      "metric_name": "db_connection_pool_active",
+      "namespace": "Bayer/CheckoutService",
+      "unit": "Count",
+      "statistic": "Maximum",
+      "description": "Active DB connections in pool",
+      "datapoints": [
+        { "timestamp": "2026-02-06T13:45:00Z", "value": 20, "anomaly": false, "pool_max": 100 },
+        { "timestamp": "2026-02-06T13:50:00Z", "value": 22, "anomaly": false, "pool_max": 100 },
+        { "timestamp": "2026-02-06T13:55:00Z", "value": 19, "anomaly": false, "pool_max": 100 },
+        { "timestamp": "2026-02-06T14:00:00Z", "value": 24, "anomaly": false, "pool_max": 100 },
+        { "timestamp": "2026-02-06T14:05:00Z", "value": 27, "anomaly": false, "pool_max": 100 },
+        { "timestamp": "2026-02-06T14:10:00Z", "value": 25, "anomaly": false, "pool_max": 100 },
+        { "timestamp": "2026-02-06T14:15:00Z", "value": 44, "anomaly": true,  "pool_max": 50  },
+        { "timestamp": "2026-02-06T14:20:00Z", "value": 50, "anomaly": true,  "pool_max": 50  },
+        { "timestamp": "2026-02-06T14:25:00Z", "value": 50, "anomaly": true,  "pool_max": 50  },
+        { "timestamp": "2026-02-06T14:30:00Z", "value": 50, "anomaly": true,  "pool_max": 50  },
+        { "timestamp": "2026-02-06T14:35:00Z", "value": 50, "anomaly": true,  "pool_max": 50  }
+      ]
+    },
+    {
+      "metric_name": "db_connection_wait_queue",
+      "namespace": "Bayer/CheckoutService",
+      "unit": "Count",
+      "statistic": "Maximum",
+      "description": "Threads waiting for a DB connection",
+      "datapoints": [
+        { "timestamp": "2026-02-06T13:45:00Z", "value": 0, "anomaly": false },
+        { "timestamp": "2026-02-06T13:50:00Z", "value": 0, "anomaly": false },
+        { "timestamp": "2026-02-06T13:55:00Z", "value": 0, "anomaly": false },
+        { "timestamp": "2026-02-06T14:00:00Z", "value": 0, "anomaly": false },
+        { "timestamp": "2026-02-06T14:05:00Z", "value": 0, "anomaly": false },
+        { "timestamp": "2026-02-06T14:10:00Z", "value": 0, "anomaly": false },
+        { "timestamp": "2026-02-06T14:15:00Z", "value": 3, "anomaly": true  },
+        { "timestamp": "2026-02-06T14:20:00Z", "value": 18, "anomaly": true },
+        { "timestamp": "2026-02-06T14:25:00Z", "value": 37, "anomaly": true },
+        { "timestamp": "2026-02-06T14:30:00Z", "value": 58, "anomaly": true },
+        { "timestamp": "2026-02-06T14:35:00Z", "value": 70, "anomaly": true }
+      ]
+    },
+    {
+      "metric_name": "error_rate_percent",
+      "namespace": "Bayer/CheckoutService",
+      "unit": "Percent",
+      "statistic": "Average",
+      "description": "Percentage of requests returning 5xx",
+      "datapoints": [
+        { "timestamp": "2026-02-06T13:45:00Z", "value": 0.1, "anomaly": false },
+        { "timestamp": "2026-02-06T13:50:00Z", "value": 0.0, "anomaly": false },
+        { "timestamp": "2026-02-06T13:55:00Z", "value": 0.2, "anomaly": false },
+        { "timestamp": "2026-02-06T14:00:00Z", "value": 0.1, "anomaly": false },
+        { "timestamp": "2026-02-06T14:05:00Z", "value": 0.3, "anomaly": false },
+        { "timestamp": "2026-02-06T14:10:00Z", "value": 0.2, "anomaly": false },
+        { "timestamp": "2026-02-06T14:15:00Z", "value": 2.5, "anomaly": true  },
+        { "timestamp": "2026-02-06T14:20:00Z", "value": 34.0, "anomaly": true },
+        { "timestamp": "2026-02-06T14:25:00Z", "value": 65.0, "anomaly": true },
+        { "timestamp": "2026-02-06T14:30:00Z", "value": 87.5, "anomaly": true },
+        { "timestamp": "2026-02-06T14:35:00Z", "value": 92.0, "anomaly": true }
+      ]
+    }
+  ]
+}

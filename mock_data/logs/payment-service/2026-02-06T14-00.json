@@ -1,0 +1,44 @@
+[
+  {
+    "timestamp": "2026-02-06T14:00:33.210Z",
+    "level": "INFO",
+    "service": "payment-service",
+    "instance_id": "i-0pay123def456",
+    "trace_id": "1-67a4c000-ppp000000001",
+    "message": "Payment authorized successfully",
+    "request_id": "pay-20001",
+    "metadata": { "order_id": "ORD-88401", "amount": 129.99, "currency": "EUR", "gateway": "stripe", "response_time_ms": 88 }
+  },
+  {
+    "timestamp": "2026-02-06T14:05:11.440Z",
+    "level": "INFO",
+    "service": "payment-service",
+    "instance_id": "i-0pay123def456",
+    "trace_id": "1-67a4c000-ppp000000002",
+    "message": "Payment authorized successfully",
+    "request_id": "pay-20002",
+    "metadata": { "order_id": "ORD-88403", "amount": 54.50, "currency": "EUR", "gateway": "stripe", "response_time_ms": 76 }
+  },
+  {
+    "timestamp": "2026-02-06T14:22:44.110Z",
+    "level": "ERROR",
+    "service": "payment-service",
+    "instance_id": "i-0pay123def456",
+    "trace_id": "1-67a4c400-ppp000000003",
+    "message": "Upstream dependency checkout-service returned HTTP 503",
+    "error_code": "UPSTREAM_503",
+    "request_id": "pay-20010",
+    "metadata": { "upstream_service": "checkout-service", "endpoint": "/api/v1/orders/ORD-88604/confirm", "retry_count": 3, "response_time_ms": 30120 }
+  },
+  {
+    "timestamp": "2026-02-06T14:30:55.770Z",
+    "level": "ERROR",
+    "service": "payment-service",
+    "instance_id": "i-0pay123def456",
+    "trace_id": "1-67a4c600-ppp000000004",
+    "message": "Upstream dependency checkout-service returned HTTP 503",
+    "error_code": "UPSTREAM_503",
+    "request_id": "pay-20015",
+    "metadata": { "upstream_service": "checkout-service", "endpoint": "/api/v1/orders/ORD-88701/confirm", "retry_count": 3, "response_time_ms": 30055 }
+  }
+]

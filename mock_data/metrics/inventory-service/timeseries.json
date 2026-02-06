@@ -1,0 +1,45 @@
+{
+  "service": "inventory-service",
+  "region": "us-east-1",
+  "collection_period_seconds": 60,
+  "metrics": [
+    {
+      "metric_name": "p99_latency_ms",
+      "namespace": "Bayer/InventoryService",
+      "unit": "Milliseconds",
+      "statistic": "p99",
+      "datapoints": [
+        { "timestamp": "2026-02-06T13:45:00Z", "value": 42, "anomaly": false },
+        { "timestamp": "2026-02-06T13:50:00Z", "value": 39, "anomaly": false },
+        { "timestamp": "2026-02-06T13:55:00Z", "value": 44, "anomaly": false },
+        { "timestamp": "2026-02-06T14:00:00Z", "value": 41, "anomaly": false },
+        { "timestamp": "2026-02-06T14:05:00Z", "value": 43, "anomaly": false },
+        { "timestamp": "2026-02-06T14:10:00Z", "value": 40, "anomaly": false },
+        { "timestamp": "2026-02-06T14:15:00Z", "value": 42, "anomaly": false },
+        { "timestamp": "2026-02-06T14:20:00Z", "value": 45, "anomaly": false },
+        { "timestamp": "2026-02-06T14:25:00Z", "value": 43, "anomaly": false },
+        { "timestamp": "2026-02-06T14:30:00Z", "value": 41, "anomaly": false },
+        { "timestamp": "2026-02-06T14:35:00Z", "value": 44, "anomaly": false }
+      ]
+    },
+    {
+      "metric_name": "error_rate_percent",
+      "namespace": "Bayer/InventoryService",
+      "unit": "Percent",
+      "statistic": "Average",
+      "datapoints": [
+        { "timestamp": "2026-02-06T13:45:00Z", "value": 0.0, "anomaly": false },
+        { "timestamp": "2026-02-06T13:50:00Z", "value": 0.0, "anomaly": false },
+        { "timestamp": "2026-02-06T13:55:00Z", "value": 0.0, "anomaly": false },
+        { "timestamp": "2026-02-06T14:00:00Z", "value": 0.0, "anomaly": false },
+        { "timestamp": "2026-02-06T14:05:00Z", "value": 0.0, "anomaly": false },
+        { "timestamp": "2026-02-06T14:10:00Z", "value": 0.0, "anomaly": false },
+        { "timestamp": "2026-02-06T14:15:00Z", "value": 0.0, "anomaly": false },
+        { "timestamp": "2026-02-06T14:20:00Z", "value": 0.0, "anomaly": false },
+        { "timestamp": "2026-02-06T14:25:00Z", "value": 0.0, "anomaly": false },
+        { "timestamp": "2026-02-06T14:30:00Z", "value": 0.0, "anomaly": false },
+        { "timestamp": "2026-02-06T14:35:00Z", "value": 0.0, "anomaly": false }
+      ]
+    }
+  ]
+}

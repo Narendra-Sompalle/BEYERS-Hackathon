@@ -1,0 +1,45 @@
+{
+  "service": "payment-service",
+  "region": "us-east-1",
+  "collection_period_seconds": 60,
+  "metrics": [
+    {
+      "metric_name": "p99_latency_ms",
+      "namespace": "Bayer/PaymentService",
+      "unit": "Milliseconds",
+      "statistic": "p99",
+      "datapoints": [
+        { "timestamp": "2026-02-06T13:45:00Z", "value": 85, "anomaly": false },
+        { "timestamp": "2026-02-06T13:50:00Z", "value": 82, "anomaly": false },
+        { "timestamp": "2026-02-06T13:55:00Z", "value": 88, "anomaly": false },
+        { "timestamp": "2026-02-06T14:00:00Z", "value": 84, "anomaly": false },
+        { "timestamp": "2026-02-06T14:05:00Z", "value": 90, "anomaly": false },
+        { "timestamp": "2026-02-06T14:10:00Z", "value": 86, "anomaly": false },
+        { "timestamp": "2026-02-06T14:15:00Z", "value": 92, "anomaly": false },
+        { "timestamp": "2026-02-06T14:20:00Z", "value": 310, "anomaly": true  },
+        { "timestamp": "2026-02-06T14:25:00Z", "value": 890, "anomaly": true  },
+        { "timestamp": "2026-02-06T14:30:00Z", "value": 1100, "anomaly": true },
+        { "timestamp": "2026-02-06T14:35:00Z", "value": 1250, "anomaly": true }
+      ]
+    },
+    {
+      "metric_name": "error_rate_percent",
+      "namespace": "Bayer/PaymentService",
+      "unit": "Percent",
+      "statistic": "Average",
+      "datapoints": [
+        { "timestamp": "2026-02-06T13:45:00Z", "value": 0.0, "anomaly": false },
+        { "timestamp": "2026-02-06T13:50:00Z", "value": 0.1, "anomaly": false },
+        { "timestamp": "2026-02-06T13:55:00Z", "value": 0.0, "anomaly": false },
+        { "timestamp": "2026-02-06T14:00:00Z", "value": 0.0, "anomaly": false },
+        { "timestamp": "2026-02-06T14:05:00Z", "value": 0.1, "anomaly": false },
+        { "timestamp": "2026-02-06T14:10:00Z", "value": 0.0, "anomaly": false },
+        { "timestamp": "2026-02-06T14:15:00Z", "value": 0.5, "anomaly": false },
+        { "timestamp": "2026-02-06T14:20:00Z", "value": 12.0, "anomaly": true },
+        { "timestamp": "2026-02-06T14:25:00Z", "value": 45.0, "anomaly": true },
+        { "timestamp": "2026-02-06T14:30:00Z", "value": 62.0, "anomaly": true },
+        { "timestamp": "2026-02-06T14:35:00Z", "value": 71.0, "anomaly": true }
+      ]
+    }
+  ]
+}

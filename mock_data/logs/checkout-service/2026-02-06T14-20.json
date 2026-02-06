@@ -1,0 +1,118 @@
+[
+  {
+    "timestamp": "2026-02-06T14:20:01.220Z",
+    "level": "ERROR",
+    "service": "checkout-service",
+    "instance_id": "i-0abc123def456",
+    "trace_id": "1-67a4c400-ccc000000001",
+    "message": "DB connection timeout after 30000ms",
+    "error_code": "DB_CONN_TIMEOUT",
+    "request_id": "req-10201",
+    "stack_trace": "com.bayer.checkout.db.ConnectionPool.acquire(ConnectionPool.java:142)\n  at com.bayer.checkout.db.ConnectionManager.getConnection(ConnectionManager.java:68)\n  at com.bayer.checkout.repository.OrderRepository.save(OrderRepository.java:55)\n  at com.bayer.checkout.service.OrderService.processOrder(OrderService.java:87)\n  at com.bayer.checkout.controller.CheckoutController.checkout(CheckoutController.java:42)\n  at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n  at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:897)",
+    "metadata": {
+      "order_id": "ORD-88601",
+      "customer_id": "CUST-3310",
+      "db_host": "checkout-db.cluster-xyz.us-east-1.rds.amazonaws.com",
+      "pool_active": 50,
+      "pool_max": 50,
+      "wait_time_ms": 30000,
+      "wait_queue_depth": 12
+    }
+  },
+  {
+    "timestamp": "2026-02-06T14:20:14.880Z",
+    "level": "ERROR",
+    "service": "checkout-service",
+    "instance_id": "i-0abc123def789",
+    "trace_id": "1-67a4c400-ccc000000002",
+    "message": "DB connection timeout after 30000ms",
+    "error_code": "DB_CONN_TIMEOUT",
+    "request_id": "req-10202",
+    "stack_trace": "com.bayer.checkout.db.ConnectionPool.acquire(ConnectionPool.java:142)\n  at com.bayer.checkout.db.ConnectionManager.getConnection(ConnectionManager.java:68)\n  at com.bayer.checkout.repository.OrderRepository.save(OrderRepository.java:55)\n  at com.bayer.checkout.service.OrderService.processOrder(OrderService.java:87)\n  at com.bayer.checkout.controller.CheckoutController.checkout(CheckoutController.java:42)",
+    "metadata": {
+      "order_id": "ORD-88602",
+      "customer_id": "CUST-5501",
+      "db_host": "checkout-db.cluster-xyz.us-east-1.rds.amazonaws.com",
+      "pool_active": 50,
+      "pool_max": 50,
+      "wait_time_ms": 30000,
+      "wait_queue_depth": 18
+    }
+  },
+  {
+    "timestamp": "2026-02-06T14:21:05.330Z",
+    "level": "ERROR",
+    "service": "checkout-service",
+    "instance_id": "i-0abc123def456",
+    "trace_id": "1-67a4c400-ccc000000003",
+    "message": "DB connection timeout after 30000ms",
+    "error_code": "DB_CONN_TIMEOUT",
+    "request_id": "req-10203",
+    "stack_trace": "com.bayer.checkout.db.ConnectionPool.acquire(ConnectionPool.java:142)\n  at com.bayer.checkout.db.ConnectionManager.getConnection(ConnectionManager.java:68)\n  at com.bayer.checkout.repository.OrderRepository.findByCustomerId(OrderRepository.java:71)\n  at com.bayer.checkout.service.OrderService.getOrderHistory(OrderService.java:103)\n  at com.bayer.checkout.controller.CheckoutController.history(CheckoutController.java:58)",
+    "metadata": {
+      "order_id": null,
+      "customer_id": "CUST-7744",
+      "db_host": "checkout-db.cluster-xyz.us-east-1.rds.amazonaws.com",
+      "pool_active": 50,
+      "pool_max": 50,
+      "wait_time_ms": 30000,
+      "wait_queue_depth": 24
+    }
+  },
+  {
+    "timestamp": "2026-02-06T14:22:03.441Z",
+    "level": "ERROR",
+    "service": "checkout-service",
+    "instance_id": "i-0abc123def789",
+    "trace_id": "1-67a4c400-ccc000000004",
+    "message": "DB connection timeout after 30000ms",
+    "error_code": "DB_CONN_TIMEOUT",
+    "request_id": "req-10204",
+    "stack_trace": "com.bayer.checkout.db.ConnectionPool.acquire(ConnectionPool.java:142)\n  at com.bayer.checkout.db.ConnectionManager.getConnection(ConnectionManager.java:68)\n  at com.bayer.checkout.repository.OrderRepository.save(OrderRepository.java:55)\n  at com.bayer.checkout.service.OrderService.processOrder(OrderService.java:87)\n  at com.bayer.checkout.controller.CheckoutController.checkout(CheckoutController.java:42)",
+    "metadata": {
+      "order_id": "ORD-88604",
+      "customer_id": "CUST-9901",
+      "db_host": "checkout-db.cluster-xyz.us-east-1.rds.amazonaws.com",
+      "pool_active": 50,
+      "pool_max": 50,
+      "wait_time_ms": 30000,
+      "wait_queue_depth": 31
+    }
+  },
+  {
+    "timestamp": "2026-02-06T14:23:15.112Z",
+    "level": "ERROR",
+    "service": "checkout-service",
+    "instance_id": "i-0abc123def456",
+    "trace_id": "1-67a4c400-ccc000000005",
+    "message": "Failed to process order — upstream DB unavailable",
+    "error_code": "ORDER_PROCESSING_FAILED",
+    "request_id": "req-10205",
+    "stack_trace": "com.bayer.checkout.service.OrderService.processOrder(OrderService.java:91)\n  Caused by: DB_CONN_TIMEOUT at com.bayer.checkout.db.ConnectionPool.acquire(ConnectionPool.java:142)",
+    "metadata": {
+      "order_id": "ORD-88605",
+      "customer_id": "CUST-1123",
+      "pool_active": 50,
+      "pool_max": 50,
+      "wait_queue_depth": 37,
+      "http_status": 503
+    }
+  },
+  {
+    "timestamp": "2026-02-06T14:24:00.990Z",
+    "level": "ERROR",
+    "service": "checkout-service",
+    "instance_id": "i-0abc123def789",
+    "trace_id": "1-67a4c400-ccc000000006",
+    "message": "Circuit breaker OPEN for database connections",
+    "error_code": "CIRCUIT_BREAKER_OPEN",
+    "request_id": "sys-circuit-breaker",
+    "metadata": {
+      "failure_count": 23,
+      "failure_threshold": 20,
+      "cooldown_seconds": 30,
+      "pool_active": 50,
+      "pool_max": 50
+    }
+  }
+]

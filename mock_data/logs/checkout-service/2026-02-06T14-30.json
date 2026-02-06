@@ -1,0 +1,118 @@
+[
+  {
+    "timestamp": "2026-02-06T14:30:02.550Z",
+    "level": "ERROR",
+    "service": "checkout-service",
+    "instance_id": "i-0abc123def456",
+    "trace_id": "1-67a4c600-ddd000000001",
+    "message": "DB connection timeout after 30000ms",
+    "error_code": "DB_CONN_TIMEOUT",
+    "request_id": "req-10301",
+    "stack_trace": "com.bayer.checkout.db.ConnectionPool.acquire(ConnectionPool.java:142)\n  at com.bayer.checkout.db.ConnectionManager.getConnection(ConnectionManager.java:68)\n  at com.bayer.checkout.repository.OrderRepository.save(OrderRepository.java:55)\n  at com.bayer.checkout.service.OrderService.processOrder(OrderService.java:87)",
+    "metadata": {
+      "order_id": "ORD-88701",
+      "customer_id": "CUST-4410",
+      "db_host": "checkout-db.cluster-xyz.us-east-1.rds.amazonaws.com",
+      "pool_active": 50,
+      "pool_max": 50,
+      "wait_time_ms": 30000,
+      "wait_queue_depth": 44
+    }
+  },
+  {
+    "timestamp": "2026-02-06T14:30:18.220Z",
+    "level": "ERROR",
+    "service": "checkout-service",
+    "instance_id": "i-0abc123def789",
+    "trace_id": "1-67a4c600-ddd000000002",
+    "message": "DB connection timeout after 30000ms",
+    "error_code": "DB_CONN_TIMEOUT",
+    "request_id": "req-10302",
+    "stack_trace": "com.bayer.checkout.db.ConnectionPool.acquire(ConnectionPool.java:142)\n  at com.bayer.checkout.db.ConnectionManager.getConnection(ConnectionManager.java:68)\n  at com.bayer.checkout.repository.OrderRepository.save(OrderRepository.java:55)\n  at com.bayer.checkout.service.OrderService.processOrder(OrderService.java:87)",
+    "metadata": {
+      "order_id": "ORD-88702",
+      "customer_id": "CUST-8823",
+      "db_host": "checkout-db.cluster-xyz.us-east-1.rds.amazonaws.com",
+      "pool_active": 50,
+      "pool_max": 50,
+      "wait_time_ms": 30000,
+      "wait_queue_depth": 51
+    }
+  },
+  {
+    "timestamp": "2026-02-06T14:31:05.660Z",
+    "level": "FATAL",
+    "service": "checkout-service",
+    "instance_id": "i-0abc123def456",
+    "trace_id": "1-67a4c600-ddd000000003",
+    "message": "Health check FAILING — service degraded, all DB connections exhausted",
+    "error_code": "HEALTH_CHECK_FAIL",
+    "request_id": "sys-healthcheck",
+    "metadata": {
+      "health_endpoint": "/actuator/health",
+      "http_status": 503,
+      "checks_failed": ["database", "connection-pool"],
+      "checks_passed": ["disk-space", "memory"],
+      "consecutive_failures": 8,
+      "pool_active": 50,
+      "pool_max": 50,
+      "wait_queue_depth": 58
+    }
+  },
+  {
+    "timestamp": "2026-02-06T14:32:11.880Z",
+    "level": "ERROR",
+    "service": "checkout-service",
+    "instance_id": "i-0abc123def789",
+    "trace_id": "1-67a4c600-ddd000000004",
+    "message": "Cascading failure detected — payment-service receiving 503 from checkout-service",
+    "error_code": "CASCADING_FAILURE",
+    "request_id": "req-10304",
+    "metadata": {
+      "downstream_service": "payment-service",
+      "downstream_error": "HTTP 503 from checkout-service/api/v1/orders",
+      "affected_customers": 142,
+      "error_rate_percent": 87.5
+    }
+  },
+  {
+    "timestamp": "2026-02-06T14:33:44.110Z",
+    "level": "ERROR",
+    "service": "checkout-service",
+    "instance_id": "i-0abc123def456",
+    "trace_id": "1-67a4c600-ddd000000005",
+    "message": "DB connection timeout after 30000ms",
+    "error_code": "DB_CONN_TIMEOUT",
+    "request_id": "req-10305",
+    "stack_trace": "com.bayer.checkout.db.ConnectionPool.acquire(ConnectionPool.java:142)\n  at com.bayer.checkout.db.ConnectionManager.getConnection(ConnectionManager.java:68)\n  at com.bayer.checkout.repository.OrderRepository.save(OrderRepository.java:55)\n  at com.bayer.checkout.service.OrderService.processOrder(OrderService.java:87)",
+    "metadata": {
+      "order_id": "ORD-88705",
+      "customer_id": "CUST-6690",
+      "db_host": "checkout-db.cluster-xyz.us-east-1.rds.amazonaws.com",
+      "pool_active": 50,
+      "pool_max": 50,
+      "wait_time_ms": 30000,
+      "wait_queue_depth": 63
+    }
+  },
+  {
+    "timestamp": "2026-02-06T14:34:55.330Z",
+    "level": "ERROR",
+    "service": "checkout-service",
+    "instance_id": "i-0abc123def789",
+    "trace_id": "1-67a4c600-ddd000000006",
+    "message": "DB connection timeout after 30000ms",
+    "error_code": "DB_CONN_TIMEOUT",
+    "request_id": "req-10306",
+    "stack_trace": "com.bayer.checkout.db.ConnectionPool.acquire(ConnectionPool.java:142)\n  at com.bayer.checkout.db.ConnectionManager.getConnection(ConnectionManager.java:68)\n  at com.bayer.checkout.repository.OrderRepository.save(OrderRepository.java:55)\n  at com.bayer.checkout.service.OrderService.processOrder(OrderService.java:87)",
+    "metadata": {
+      "order_id": "ORD-88706",
+      "customer_id": "CUST-2277",
+      "db_host": "checkout-db.cluster-xyz.us-east-1.rds.amazonaws.com",
+      "pool_active": 50,
+      "pool_max": 50,
+      "wait_time_ms": 30000,
+      "wait_queue_depth": 70
+    }
+  }
+]
