@@ -1,82 +1,113 @@
-from google.adk import Agent
-from app.tools.cloudwatch_logs import query_logs_insights
-from app.tools.stack_parser import extract_stack_traces
-from app.tools.envelope import build_response_envelope
-import datetime
+import os
+import asyncio
+import time
+import boto3
+from typing import List, Dict, Any
+from dotenv import load_dotenv
 
-def analyze_logs(service: str, time_window: dict, filter_pattern: str = None) -> dict:
+# ADK Core Imports
+from google.adk.agents import LlmAgent
+from google.adk.runners import InMemoryRunner
+from google.adk.models.lite_llm import LiteLlm
+
+# 1. LOAD ENVIRONMENT
+load_dotenv()
+
+# --- 🛠️ THE MASTER TOOL ---
+
+def diagnose_service_errors(service: str, lookback_minutes: int = 15) -> str:
     """
-    Fetches logs, summarizes errors, and extracts stack traces.
+    SINGLE TOOL CALL: 
+    1. Calculates timestamps.
+    2. Queries CloudWatch Logs for ERRORs.
+    3. Returns ONLY the last 100 characters of the findings.
     """
-    start_time = datetime.datetime.now(datetime.timezone.utc)
+    logs_client = boto3.client('logs', region_name=os.getenv('AWS_REGION', 'us-east-1'))
     
-    # 1. Fetch logs
+    # 1. Internal Time Calculation
+    end_time = int(time.time())
+    start_time = end_time - (lookback_minutes * 60)
+    
+    log_group = f"/bayer/{service}" 
+    query = "fields @timestamp, @message | filter @message like /ERROR/ | sort @timestamp desc | limit 3"
+    
     try:
-        logs = query_logs_insights(service, time_window, filter_pattern)
-    except Exception as e:
-        return build_response_envelope(
-            agent_name="logs_agent",
-            incident_id=time_window.get("incident_id", "INC-UNKNOWN"),
-            findings=[],
-            start_time=start_time,
-            error=str(e)
+        # 2. Query Logs
+        start_res = logs_client.start_query(
+            logGroupName=log_group, 
+            startTime=start_time, 
+            endTime=end_time, 
+            queryString=query
         )
+        query_id = start_res['queryId']
         
-    # 2. Extract findings
-    error_summary = {}
-    sample_entries = []
-    
-    for entry in logs:
-        error_code = entry.get("error_code", "UNKNOWN_ERROR")
-        if error_code not in error_summary:
-            error_summary[error_code] = {
-                "count": 0,
-                "first_seen": entry.get("@timestamp"),
-                "last_seen": entry.get("@timestamp")
-            }
-        
-        error_summary[error_code]["count"] += 1
-        error_summary[error_code]["last_seen"] = entry.get("@timestamp")
-        
-        # Extract stack trace for high priority errors
-        if len(sample_entries) < 3:
-            parsed_stack = extract_stack_traces(entry)
-            if parsed_stack:
-                entry["parsed_stack_trace"] = parsed_stack
-                sample_entries.append(entry)
-                
-    findings = {
-        "matched_entries": len(logs),
-        "error_summary": error_summary,
-        "sample_entries": sample_entries
-    }
-    
-    # 3. Generate Smart Summary
-    summary = None
-    if logs:
-        top_errors = sorted(error_summary.items(), key=lambda x: x[1]["count"], reverse=True)[:2]
-        error_descriptions = [f"{count_info['count']}x {code}" for code, count_info in top_errors]
-        summary = f"Detected {len(logs)} error logs. Top issues: {', '.join(error_descriptions)}."
-    
-    # 4. Build envelope
-    return build_response_envelope(
-        agent_name="logs_agent",
-        incident_id=time_window.get("incident_id", "INC-UNKNOWN"),
-        findings=[findings] if logs else [],
-        start_time=start_time,
-        summary=summary
-    )
+        # Poll for results
+        raw_logs = []
+        for _ in range(10):
+            response = logs_client.get_query_results(queryId=query_id)
+            if response['status'] == 'Complete':
+                raw_logs = response.get('results', [])
+                break
+            time.sleep(1)
 
-logs_agent = Agent(
-    name="logs_agent",
-    description="Reads and analyzes CloudWatch Logs to identify errors and stack traces.",
-    instruction="""
-    You are the Logs Intelligence Agent. Your task is to:
-    1. Query CloudWatch Logs Insights for the service and time window.
-    2. Focus on ERROR, FATAL, and WARN levels.
-    3. Summarize occurrences of different error codes (e.g., DB_CONN_TIMEOUT).
-    4. Extract and parse stack traces to identify the root cause frame.
-    5. Return a structured response using the standard envelope.
-    """,
-    tools=[analyze_logs]
+        if not raw_logs:
+            return "RESULT: No ERROR logs found in the last 15 minutes."
+
+        # 3. Format and Truncate to exactly 100 characters
+        combined_text = ""
+        for res in raw_logs:
+            msg = next((item['value'] for item in res if item['field'] == '@message'), "")
+            combined_text += f" | {msg}"
+        
+        # Extract only the last 100 characters for the agent to analyze
+        snippet = combined_text[-100:].strip()
+        return f"LAST_100_CHARS_OF_LOGS: {snippet}"
+
+    except Exception as e:
+        return f"ERROR: Could not fetch logs. {str(e)}"
+
+# --- 🤖 LOGS SUB-AGENT ---
+
+# Using Claude 3.5 Sonnet for precise one-shot tool execution
+model = LiteLlm(model="bedrock/anthropic.claude-3-5-sonnet-20240620-v1:0")
+
+logs_agent = LlmAgent(
+    name="LogsAgent",
+    model=model, 
+    instruction=(
+        "SYSTEM: You are a one-shot diagnostic sub-agent. "
+        "Your ONLY action is to call 'diagnose_service_errors' once. "
+        "Once you receive the 100-character log snippet, provide a "
+        "ROOT CAUSE and a 3-step FIX based strictly on those characters."
+    ),
+    tools=[diagnose_service_errors]
 )
+
+# --- 🧪 TEST RUNNER ---
+
+async def test_logs_agent():
+    print(f"🚀 Running One-Shot Sub-Agent Test...")
+    runner = InMemoryRunner(agent=logs_agent)
+    query = "Diagnose the checkout-service."
+    
+    try:
+        # We run the agent and capture the trajectory
+        trajectory = await runner.run_debug(query, verbose=True)
+        
+        print("\n" + "="*60)
+        print("📝 ONE-SHOT VERIFICATION:")
+        
+        # Safe extraction of the final answer
+        if isinstance(trajectory, list):
+            final_text = trajectory[-1].text if hasattr(trajectory[-1], 'text') else str(trajectory[-1])
+        else:
+            final_text = getattr(trajectory, 'text', str(trajectory))
+            
+        print(final_text)
+        print("="*60)
+        
+    except Exception as e:
+        print(f"❌ Error: {e}")
+
+if __name__ == "__main__":
+    asyncio.run(test_logs_agent())
