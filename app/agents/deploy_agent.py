@@ -40,7 +40,7 @@ def submit_deploy_response(incident_id: str, findings: list, summary: str) -> di
 
 deploy_agent = Agent(
     name="deploy_agent",
-    model=LiteLlm(model="bedrock/anthropic.claude-sonnet-4-5-20250929-v1:0"),
+    model=LiteLlm(model="bedrock/us.anthropic.claude-sonnet-4-5-20250929-v1:0"),
     description="Analyzes GitHub commit history to identify risky deployments related to an incident. Give it the service name, time_window dict, and optional anomaly_start timestamp.",
     instruction="""You are the Deployment Intelligence Agent. When you receive a task:
 1. Call `analyze_deployments` with the service, time_window (dict with "start", "end", "incident_id"), and optional anomaly_start.

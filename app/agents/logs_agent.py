@@ -134,7 +134,7 @@ def analyze_logs(service: str, time_window: dict, filter_pattern: str = None) ->
 
 logs_agent = LlmAgent(
     name="logs_agent",
-    model=LiteLlm(model="bedrock/anthropic.claude-sonnet-4-5-20250929-v1:0"),
+    model=LiteLlm(model="bedrock/us.anthropic.claude-sonnet-4-5-20250929-v1:0"),
     description="Reads and analyzes CloudWatch Logs to identify errors and stack traces. Give it the service name, start time, end time, and incident_id.",
     instruction="""You are the Logs Intelligence Agent. When you receive a task:
 1. Call `analyze_logs` with the service, time_window (dict with "start", "end", "incident_id"), and optional filter_pattern.

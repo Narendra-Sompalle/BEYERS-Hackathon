@@ -211,7 +211,7 @@ Call `generate_rca_markdown` with all findings to produce the final report. Incl
 
 commander_agent = Agent(
     name="commander",
-    model=LiteLlm(model="bedrock/anthropic.claude-opus-4-6-v1"),
+    model=LiteLlm(model="bedrock/us.anthropic.claude-opus-4-6-v1"),
     instruction=COMMANDER_INSTRUCTION,
     description="The Incident Commander — orchestrates multi-phase incident investigation by delegating to logs, metrics, and deployment sub-agents via A2A.",
     tools=[

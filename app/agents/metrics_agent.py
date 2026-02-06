@@ -58,7 +58,7 @@ def submit_metrics_response(incident_id: str, findings: list, summary: str) -> d
 
 metrics_agent = Agent(
     name="metrics_agent",
-    model=LiteLlm(model="bedrock/anthropic.claude-sonnet-4-5-20250929-v1:0"),
+    model=LiteLlm(model="bedrock/us.anthropic.claude-sonnet-4-5-20250929-v1:0"),
     description="Analyzes CloudWatch metrics to identify anomalies and degradation trends. Give it the service name, metric_names list, time_window dict, and optional threshold.",
     instruction="""You are the Metrics Intelligence Agent. When you receive a task:
 1. Call `query_metrics_and_detect_anomalies` with the service, metric_names list, time_window (dict with "start", "end", "incident_id"), and threshold.
