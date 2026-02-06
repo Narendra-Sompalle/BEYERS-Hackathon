@@ -6,7 +6,9 @@ Includes full execution tracing: agent transitions, tool calls, reasoning, and s
 import asyncio
 import json
 import logging
+import smtplib
 import time
+from email.message import EmailMessage
 from typing import Any, Dict
 
 from google.adk.runners import InMemoryRunner
@@ -155,13 +157,66 @@ async def _run_commander(event: dict) -> dict:
         else:
             _trace("STATE", f"{key} = (not set)", DIM)
 
-    return {
+    result = {
         "response": final_text,
         "session_id": session.id,
         "elapsed_seconds": round(elapsed, 1),
         "event_count": step_count,
         "sub_agent_findings": findings,
     }
+
+    # ── Send findings via email ────────────────────────────────────
+    try:
+        _send_findings_email(result)
+    except Exception as mail_err:
+        _trace("EMAIL", f"Failed to send email: {mail_err}", RED)
+
+    return result
+
+
+def _send_findings_email(result: dict):
+    """Send incident findings via Gmail SMTP."""
+    EMAIL_ADDRESS = "sompalli.narendra98@gmail.com"
+    EMAIL_PASSWORD = "lvkg extk jocm cyid"
+    TO_ADDRESS = "nsompalle@gmail.com"
+
+    findings = result.get("sub_agent_findings", {})
+    response_text = result.get("response", "No response captured.")
+    elapsed = result.get("elapsed_seconds", "?")
+
+    # Build HTML body
+    findings_html = ""
+    for key, val in findings.items():
+        label = key.replace("_", " ").title()
+        findings_html += f"<h3>{label}</h3><pre style='background:#f4f4f4;padding:10px;border-radius:5px;white-space:pre-wrap;'>{val}</pre>"
+
+    html_body = f"""\
+<!DOCTYPE html>
+<html>
+<body style="font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto;">
+    <h1 style="color: #d32f2f;">Incident Commander - Investigation Report</h1>
+    <p><b>Session:</b> {result.get("session_id", "N/A")}</p>
+    <p><b>Duration:</b> {elapsed}s | <b>Events processed:</b> {result.get("event_count", "?")}</p>
+    <hr>
+    <h2>Commander Response</h2>
+    <pre style="background:#f4f4f4;padding:10px;border-radius:5px;white-space:pre-wrap;">{response_text}</pre>
+    <hr>
+    <h2>Sub-Agent Findings</h2>
+    {findings_html if findings_html else "<p><i>No findings captured.</i></p>"}
+</body>
+</html>"""
+
+    msg = EmailMessage()
+    msg["Subject"] = f"[AIC] Incident Investigation Report - Session {result.get('session_id', 'N/A')}"
+    msg["From"] = EMAIL_ADDRESS
+    msg["To"] = TO_ADDRESS
+    msg.set_content(f"Incident Report\n\nResponse:\n{response_text}\n\nFindings:\n{json.dumps(findings, indent=2)}")
+    msg.add_alternative(html_body, subtype="html")
+
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
+        smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
+        smtp.send_message(msg)
+    _trace("EMAIL", "Findings email sent successfully", GREEN)
 
 
 def lambda_handler(event: Any, context: Any = None) -> Dict[str, Any]:
@@ -176,7 +231,18 @@ def lambda_handler(event: Any, context: Any = None) -> Dict[str, Any]:
         event = {"detail": event, "detail-type": "CloudWatch Alarm State Change"}
 
     try:
-        result = asyncio.run(_run_commander(event))
+        # Lambda may already have a running event loop — handle both cases
+        try:
+            loop = asyncio.get_running_loop()
+        except RuntimeError:
+            loop = None
+
+        if loop and loop.is_running():
+            import concurrent.futures
+            with concurrent.futures.ThreadPoolExecutor() as pool:
+                result = pool.submit(asyncio.run, _run_commander(event)).result()
+        else:
+            result = asyncio.run(_run_commander(event))
         logger.info("Commander completed successfully")
         return {
             "statusCode": 200,
