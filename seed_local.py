@@ -64,7 +64,7 @@ def _compute_time_offset_ms() -> int:
                         latest_ms = ts
 
     now_ms = int(datetime.now(timezone.utc).timestamp() * 1000)
-    target_latest_ms = now_ms - (10 * 60 * 1000)  # 10 min ago
+    target_latest_ms = now_ms - (30 * 1000)  # 30 seconds ago
     offset = target_latest_ms - latest_ms
     logger.info("Time offset: %+d ms (%+.1f minutes)", offset, offset / 60000)
     return offset
