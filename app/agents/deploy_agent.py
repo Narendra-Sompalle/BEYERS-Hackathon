@@ -10,13 +10,21 @@ def analyze_deployments(
     service: str, time_window: dict, anomaly_start: str = None
 ) -> dict:
     """Fetches GitHub commits and correlates them with the incident. Returns findings for analysis."""
+    print(f"[DEPLOY_AGENT|TOOL] analyze_deployments: service={service}, window={time_window.get('start')} to {time_window.get('end')}", flush=True)
     try:
         deployments = get_github_deployments(service, time_window)
+        print(f"[DEPLOY_AGENT|TOOL] Found {len(deployments)} deployments/commits", flush=True)
     except Exception as e:
+        print(f"[DEPLOY_AGENT|TOOL] ERROR fetching deployments: {e}", flush=True)
         return {"error": str(e)}
 
     ref_time = anomaly_start or time_window["end"]
     correlation_results = correlate_deploy_to_incident(deployments, ref_time)
+    highest = correlation_results.get("highest_risk_deploy")
+    if highest:
+        print(f"[DEPLOY_AGENT|TOOL] Highest risk: {highest.get('commit_id', 'N/A')} score={highest.get('correlation_score', 'N/A')}", flush=True)
+    else:
+        print("[DEPLOY_AGENT|TOOL] No high-risk deployments found", flush=True)
 
     return {
         "deployments_found": len(deployments),
@@ -28,6 +36,7 @@ def analyze_deployments(
 
 def submit_deploy_response(incident_id: str, findings: list, summary: str) -> dict:
     """Submits the final response with the agent's generated summary."""
+    print(f"[DEPLOY_AGENT|SUBMIT] incident={incident_id}, findings={len(findings)}, summary={summary[:100]}", flush=True)
     start_time = datetime.datetime.now(datetime.timezone.utc)
     return build_response_envelope(
         agent_name="deploy_agent",

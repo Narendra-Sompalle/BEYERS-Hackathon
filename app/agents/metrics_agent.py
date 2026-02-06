@@ -10,11 +10,14 @@ def query_metrics_and_detect_anomalies(
     service: str, metric_names: list, time_window: dict, threshold: float = 2.0
 ) -> dict:
     """Fetches metrics and detects anomalies. Returns findings for the agent to analyze."""
+    print(f"[METRICS_AGENT|TOOL] query_metrics: service={service}, metrics={metric_names}, window={time_window.get('start')} to {time_window.get('end')}", flush=True)
     datetime.datetime.now(datetime.timezone.utc)
 
     try:
         raw_data = get_metric_data(service, metric_names, time_window)
+        print(f"[METRICS_AGENT|TOOL] CloudWatch returned data for {len(raw_data)} metrics", flush=True)
     except Exception as e:
+        print(f"[METRICS_AGENT|TOOL] ERROR fetching metrics: {e}", flush=True)
         return {"error": str(e)}
 
     anomalies_detected = []
@@ -36,16 +39,19 @@ def query_metrics_and_detect_anomalies(
                 }
             )
 
-    return {
+    result = {
         "anomalies": anomalies_detected,
         "count": len(anomalies_detected),
         "service": service,
         "incident_id": time_window.get("incident_id", "INC-UNKNOWN"),
     }
+    print(f"[METRICS_AGENT|TOOL] Found {len(anomalies_detected)} anomalies", flush=True)
+    return result
 
 
 def submit_metrics_response(incident_id: str, findings: list, summary: str) -> dict:
     """Submits the final response with the agent's generated summary."""
+    print(f"[METRICS_AGENT|SUBMIT] incident={incident_id}, findings={len(findings)}, summary={summary[:100]}", flush=True)
     start_time = datetime.datetime.now(datetime.timezone.utc)
     return build_response_envelope(
         agent_name="metrics_agent",

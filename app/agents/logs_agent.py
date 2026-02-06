@@ -25,6 +25,7 @@ def diagnose_service_errors(service: str, lookback_minutes: int = 15) -> str:
     2. Queries CloudWatch Logs for ERRORs.
     3. Returns ONLY the last 100 characters of the findings.
     """
+    print(f"[LOGS_AGENT|TOOL] diagnose_service_errors: service={service}, lookback={lookback_minutes}min", flush=True)
     logs_client = boto3.client("logs", region_name=os.getenv("AWS_REGION", "us-east-1"))
 
     end_time = int(time.time())
@@ -72,11 +73,14 @@ def diagnose_service_errors(service: str, lookback_minutes: int = 15) -> str:
 
 def analyze_logs(service: str, time_window: dict, filter_pattern: str = None) -> dict:
     """Fetches logs, summarizes errors, and extracts stack traces."""
+    print(f"[LOGS_AGENT|TOOL] analyze_logs: service={service}, window={time_window.get('start')} to {time_window.get('end')}", flush=True)
     start_time = datetime.datetime.now(datetime.timezone.utc)
 
     try:
         logs = query_logs_insights(service, time_window, filter_pattern)
+        print(f"[LOGS_AGENT|TOOL] CloudWatch Logs Insights returned {len(logs)} entries", flush=True)
     except Exception as e:
+        print(f"[LOGS_AGENT|TOOL] ERROR querying logs: {e}", flush=True)
         return build_response_envelope(
             agent_name="logs_agent",
             incident_id=time_window.get("incident_id", "INC-UNKNOWN"),
@@ -120,6 +124,7 @@ def analyze_logs(service: str, time_window: dict, filter_pattern: str = None) ->
             f"{count_info['count']}x {code}" for code, count_info in top_errors
         ]
         summary = f"Detected {len(logs)} error logs. Top issues: {', '.join(error_descriptions)}."
+        print(f"[LOGS_AGENT|TOOL] Summary: {summary}", flush=True)
 
     return build_response_envelope(
         agent_name="logs_agent",
